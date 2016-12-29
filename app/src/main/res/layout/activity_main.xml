@@ -19,7 +19,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textSize="120sp"
-        android:background="#FF20B52D" />
+        android:background="#FF20B52D"
+        android:onClick="goClick" />
 
     <TextView
         android:text="30s"
