@@ -44,11 +44,27 @@ public class MainActivity extends AppCompatActivity {
         Log.i("value of correctIdx", Integer.toString(choices.get(correctIdx)));
 
         for (int i = 0; i < choices.size(); i++) {
-            if (0 == choices.get(i)) {
-                choices.set(i, rand.nextInt(60-maxOfOperand) + maxOfOperand +1 );
-                Log.i("choices set", Integer.toString(choices.get(i)));
-            }
+            int valSet = 0;
+            if (i == correctIdx) continue;
+
+            // set i-th item
+            boolean duplicate = false;
+
+            do {
+                valSet = rand.nextInt(60-maxOfOperand) + maxOfOperand +1 ;
+                duplicate = false;
+                for (int j = 0; j < choices.size(); j++) {
+                    if (valSet == choices.get(j)) {
+                        duplicate = true;
+                    }
+                }
+            } while (duplicate);
+
+            choices.set(i, valSet);
+            Log.i("choices set", Integer.toString(choices.get(i)));
+
         }
+
         button.setText(Integer.toString(choices.get(0)));
         button1.setText(Integer.toString(choices.get(1)));
         button2.setText(Integer.toString(choices.get(2)));
