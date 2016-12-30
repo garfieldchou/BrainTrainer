@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView timerTextView, scoreTextView, questionTextView, resultTextView;
     GridLayout guessLayout;
-    Button playAgain;
+    Button playAgain, button, button1, button2, button3;
     int trial, scored, correctIdx;
     Random rand = new Random();
 
@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("choices set", Integer.toString(choices.get(i)));
             }
         }
+        button.setText(Integer.toString(choices.get(0)));
+        button1.setText(Integer.toString(choices.get(1)));
+        button2.setText(Integer.toString(choices.get(2)));
+        button3.setText(Integer.toString(choices.get(3)));
         questionTextView.setText( Integer.toString(num1) + "+" + Integer.toString(num2));
 
     }
@@ -111,7 +115,12 @@ public class MainActivity extends AppCompatActivity {
         guessLayout = (GridLayout) findViewById(R.id.guessLayout);
         resultTextView = (TextView) findViewById(R.id.resultTextView);
         playAgain = (Button) findViewById(R.id.playAgain);
+        button = (Button) findViewById(R.id.button);
+        button1 = (Button) findViewById(R.id.button1);
+        button2 = (Button) findViewById(R.id.button2);
+        button3 = (Button) findViewById(R.id.button3);
         trial = 0;
         scored = 0;
+        nextQuestion();
     }
 }
