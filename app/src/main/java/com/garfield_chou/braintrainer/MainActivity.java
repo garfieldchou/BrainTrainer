@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         questionTextView.setVisibility(View.VISIBLE);
         guessLayout.setVisibility(View.VISIBLE);
 
+        scoreTextView.setText("0/0");
+
         new CountDownTimer(30000 + 50, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 timerTextView.setText( "0s");
                 playAgain.setVisibility(View.VISIBLE);
+                resultTextView.setText("Your score: " + Integer.toString(scored) + "/" +  Integer.toString(trial));
             }
         }.start();
 
@@ -46,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
         String buttonTag = view.getTag().toString();
         Log.i("button", buttonTag + " was clicked!");
         trial++;
+
         scoreTextView.setText(Integer.toString(scored) + "/" + Integer.toString(trial));
+
+        /*resultTextView.setText("Correct!");
+        resultTextView.setVisibility(View.VISIBLE);*/
 
     }
 
