@@ -3,6 +3,7 @@ package com.garfield_chou.braintrainer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -36,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 playAgain.setVisibility(View.VISIBLE);
             }
         }.start();
+
+    }
+
+    public void ansClick (View view) {
+
+        String buttonTag = view.getTag().toString();
+        Log.i("button", buttonTag + " was clicked!");
 
     }
 
