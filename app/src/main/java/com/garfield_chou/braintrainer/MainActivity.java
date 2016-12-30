@@ -22,6 +22,36 @@ public class MainActivity extends AppCompatActivity {
     Button playAgain, button, button1, button2, button3;
     int trial, scored, correctIdx;
     Random rand = new Random();
+    boolean finished = false;
+
+    public void restartClick (View view) {
+        playRestart();
+        finished = false;
+    }
+
+    public void playRestart () {
+        trial = 0;
+        scored = 0;
+        scoreTextView.setText("0/0");
+
+        new CountDownTimer(30000 + 50, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timerTextView.setText( Integer.toString((int) millisUntilFinished / 1000) + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                timerTextView.setText( "0s");
+                playAgain.setVisibility(View.VISIBLE);
+                resultTextView.setText("Your score: " + Integer.toString(scored) + "/" +  Integer.toString(trial));
+                finished = true;
+            }
+        }.start();
+        playAgain.setVisibility(View.INVISIBLE);
+        resultTextView.setVisibility(View.INVISIBLE);
+        nextQuestion();
+    }
 
     public void nextQuestion () {
 
@@ -83,41 +113,29 @@ public class MainActivity extends AppCompatActivity {
         questionTextView.setVisibility(View.VISIBLE);
         guessLayout.setVisibility(View.VISIBLE);
 
-        scoreTextView.setText("0/0");
-
-        new CountDownTimer(30000 + 50, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timerTextView.setText( Integer.toString((int) millisUntilFinished / 1000) + "s");
-            }
-
-            @Override
-            public void onFinish() {
-                timerTextView.setText( "0s");
-                playAgain.setVisibility(View.VISIBLE);
-                resultTextView.setText("Your score: " + Integer.toString(scored) + "/" +  Integer.toString(trial));
-            }
-        }.start();
+        playRestart();
 
     }
 
     public void ansClick (View view) {
 
-        String buttonTag = view.getTag().toString();
-        Log.i("button", buttonTag + " was clicked!");
-        trial++;
+        if (!finished) {
 
-        if ( correctIdx == Integer.parseInt(buttonTag)) {
-            scored++;
-            resultTextView.setText("Correct!");
-        } else {
-            resultTextView.setText("Wrong!");
+            String buttonTag = view.getTag().toString();
+            Log.i("button", buttonTag + " was clicked!");
+            trial++;
+
+            if (correctIdx == Integer.parseInt(buttonTag)) {
+                scored++;
+                resultTextView.setText("Correct!");
+            } else {
+                resultTextView.setText("Wrong!");
+            }
+            resultTextView.setVisibility(View.VISIBLE);
+            scoreTextView.setText(Integer.toString(scored) + "/" + Integer.toString(trial));
+
+            nextQuestion();
         }
-        resultTextView.setVisibility(View.VISIBLE);
-        scoreTextView.setText(Integer.toString(scored) + "/" + Integer.toString(trial));
-
-        nextQuestion();
-
     }
 
     @Override
@@ -135,8 +153,5 @@ public class MainActivity extends AppCompatActivity {
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
-        trial = 0;
-        scored = 0;
-        nextQuestion();
     }
 }
