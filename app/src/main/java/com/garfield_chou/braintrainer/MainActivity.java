@@ -9,12 +9,49 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
+import static java.util.Arrays.asList;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView timerTextView, scoreTextView, questionTextView, resultTextView;
     GridLayout guessLayout;
     Button playAgain;
-    int trial, scored;
+    int trial, scored, correctIdx;
+    Random rand = new Random();
+
+    public void nextQuestion () {
+
+        int num1 = 0;
+        int num2 = 0;
+        int maxOfOperand = 0;
+        int minIndex = 0;
+        ArrayList<Integer> choices = new ArrayList<Integer>(asList(0, 0, 0, 0));
+
+        num1 = rand.nextInt(30) + 1;
+        num2 = rand.nextInt(30) + 1;
+        if (num1 > num2) {
+            maxOfOperand = num1;
+        } else {
+            maxOfOperand = num2;
+        }
+        correctIdx = rand.nextInt(4);
+        Log.i("correctIdx", Integer.toString(correctIdx));
+        choices.set(correctIdx, num1 + num2 );
+        Log.i("value of correctIdx", Integer.toString(choices.get(correctIdx)));
+
+        for (int i = 0; i < choices.size(); i++) {
+            if (0 == choices.get(i)) {
+                choices.set(i, rand.nextInt(60-maxOfOperand) + maxOfOperand +1 );
+                Log.i("choices set", Integer.toString(choices.get(i)));
+            }
+        }
+        questionTextView.setText( Integer.toString(num1) + "+" + Integer.toString(num2));
+
+    }
 
     public void goClick (View view) {
 
@@ -50,10 +87,16 @@ public class MainActivity extends AppCompatActivity {
         Log.i("button", buttonTag + " was clicked!");
         trial++;
 
+        if ( correctIdx == Integer.parseInt(buttonTag)) {
+            scored++;
+            resultTextView.setText("Correct!");
+        } else {
+            resultTextView.setText("Wrong!");
+        }
+        resultTextView.setVisibility(View.VISIBLE);
         scoreTextView.setText(Integer.toString(scored) + "/" + Integer.toString(trial));
 
-        /*resultTextView.setText("Correct!");
-        resultTextView.setVisibility(View.VISIBLE);*/
+        nextQuestion();
 
     }
 
