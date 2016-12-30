@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     TextView timerTextView, scoreTextView, questionTextView, resultTextView;
     GridLayout guessLayout;
     Button playAgain;
+    int trial, scored;
 
     public void goClick (View view) {
 
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         String buttonTag = view.getTag().toString();
         Log.i("button", buttonTag + " was clicked!");
+        trial++;
+        scoreTextView.setText(Integer.toString(scored) + "/" + Integer.toString(trial));
 
     }
 
@@ -58,5 +61,7 @@ public class MainActivity extends AppCompatActivity {
         guessLayout = (GridLayout) findViewById(R.id.guessLayout);
         resultTextView = (TextView) findViewById(R.id.resultTextView);
         playAgain = (Button) findViewById(R.id.playAgain);
+        trial = 0;
+        scored = 0;
     }
 }
